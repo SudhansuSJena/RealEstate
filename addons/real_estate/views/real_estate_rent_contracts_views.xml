@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--Custom Tree view-->
+<record id="view_real_estate_rent_contracts_tree" model="ir.ui.view">
+    <field name="name">real_estate.rent_contracts.tree</field>
+    <field name="model">real_estate.rent_contracts</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="property_id" />
+            <field name="tenant_id" />
+            <field name="rent_status" />
+            <field name="currency_id" />
+            <field name="rent_amount" />
+            <field name="start_date" />
+            <field name="end_date" />
+            <field name="description" />
+
+        </tree>
+    </field>
+
+</record>
+
+<!--Custom Kanban view-->
+<record id="view_real_estate_rent_contracts_kanban" model="ir.ui.view">
+    <field name="name">real_estate.rent_contracts.kanban</field>
+    <field name="model">real_estate.rent_contracts</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click">
+                        <div class="oe_kanban_details">
+                            <div class="oe_kanban_tags">
+                                <strong>Property</strong>
+                                <field name="property_id" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Tenant of the Property</strong>
+                                <field name="tenant_id" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Customer's contract Name: </strong>
+                                <field name="name" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Rent's status: </strong>
+                                <field name="rent_status" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Currency</strong>
+                                <field name="currency_id" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <field name="rent_amount" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Start Date</strong>
+                                <field name="start_date" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>End Date</strong>
+                                <field name="end_date" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Description</strong>
+                                <field name="description" />
+                            </div>
+                            
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+
+</record>
+
+<!--Custom form view-->
+<record id="view_real_estate_rent_contracts_form" model="ir.ui.view">
+    <field name="name">real_estate.rent_contracts.form</field>
+    <field name="model">real_estate.rent_contracts</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="property_id" />
+                    <field name="tenant_id" />
+                    <field name="name" />
+                    <field name="rent_status" />
+                    <field name="currency_id" />
+                    <field name="rent_amount" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="description" />
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user" />
+                <field name="message_ids" />
+            </div>
+        </form>
+    </field>
+
+</record>
+
+<record id="action_real_estate_rent_contracts_window" model="ir.actions.act_window">
+    <field name="name">Rental Contracts</field>
+    <field name="res_model">real_estate.rent_contracts</field>
+    <field name="view_mode">tree,kanban,form</field>
+    <field name="view_ids" eval="[
+        Command.clear(),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_estate_rent_contracts_tree')}),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_real_estate_rent_contracts_kanban')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_rent_contracts_form')})
+    ]" />
+</record>
+</odoo>

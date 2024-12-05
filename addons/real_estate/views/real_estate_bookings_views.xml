@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+<!--Custom tree view-->
+<record id="view_real_estate_bookings_tree" model="ir.ui.view">
+    <field name="name">real_estate.bookings.tree</field>
+    <field name="model">real_estate.bookings</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="customer_id" />
+            <field name="property_id" />
+            <field name="booking_date" />
+            <field name="booking_status" />
+            <field name="currency_id" />
+            <field name="payment_price" />
+            <field name="booking_hours" />
+        </tree>
+    </field>
+</record>
+
+
+<!--CUstom kanban view-->
+<record id="view_real_estate_bookings_kanban" model="ir.ui.view">
+    <field name="name">real_estate.bookings.kanban</field>
+    <field name="model">real_estate.bookings</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click">
+                        <div class="oe_kanban_details">
+                            <div class="oe_kanban_tags">
+                            <!-- Many2one -->
+                                <strong>Customer: </strong>
+                                <field name="customer_id" />
+                            </div>
+
+                            <div class="oe_kanban_tags">
+                                <!-- Many2one -->
+                                <strong>Select Property: </strong>
+                                <field name="property_id" />
+                            </div>
+
+                            <div class="oe_kanban_tags">
+                                <strong>Date: </strong>
+                                <field name="booking_date" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Booking status: </strong>
+                                <field name="booking_status" />
+                            </div>
+                            <div class="oe_kanban_tags">
+                                <strong>Currency: </strong>
+                                <field name="currency_id" />
+                            </div>
+
+                            <div class="oe_kanban_tags">
+                                <strong>Payment: </strong>
+                                <field name="payment_price" />
+                            </div>
+
+                            <div class="oe_kanban_tags">
+                                <strong>Booking Hours: </strong>
+                                <field name="booking_hours" />
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+
+<!--Custom form view-->
+<record id="view_real_estate_bookings_form" model="ir.ui.view">
+    <field name="name">real_estate.bookings.form</field>
+    <field name="model">real_estate.bookings</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+
+                <group>
+                    <!-- Many2one tags -->
+                    <field name="customer_id" widget="many2one_tags" />
+
+                    <!-- Many2one tags -->
+                    <field name="property_id" widget="many2one_tags" />
+
+                    <field name="booking_date" />
+                    <field name="booking_status" />
+
+                    <!-- Many2one -->
+                    <field name="currency_id" />
+                    <field name="payment_price" />
+                    <field name="booking_hours" />
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user" />
+                <field name="message_ids" />
+            </div>
+        </form>
+    </field>
+</record>
+
+
+<!--Custom window action-->
+<record id="action_real_estate_bookings_window" model="ir.actions.act_window">
+    <field name="name">Customer's Bookings</field>
+    <field name="res_model">real_estate.bookings</field>
+    <field name="view_mode">tree,kanban,form</field>
+    <field name="view_ids" eval="[
+        Command.clear(),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_estate_bookings_tree')}),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_real_estate_bookings_kanban')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_bookings_form')})
+    ]" />
+
+</record>
+
+</odoo>

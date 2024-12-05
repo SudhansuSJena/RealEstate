@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  web:
+    image: odoo:17.0
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo-web-data:/var/lib/odoo # Host path : Container path
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+    environment:
+      - HOST=db
+      # This tells where to find the PostgresSQL databse. 'db' refers to the service name of PostgreSQL in the docker-compose. Docker compose creates an internal network where services can refer to eachother by their service names. Without this, Odoo wouldnot know where to connnect to the database.
+      - USER=odoo17 # Specifies which POSTGRESSQL user Odoo should use to connect. Must match POSTGRES_USER in the db service. If these doesn't match, database authentication will fail.
+      - PASSWORD=postgres # THe password of the PostgreSQL user. Must match POSTGRES_PASSWORD in the db service.Required for secure database connection.
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres # this shoud match PASSWORD of web service
+      - POSTGRES_USER=odoo17 # this should match the USER of web service.
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:

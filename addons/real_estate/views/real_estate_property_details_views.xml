@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--Custom tree-->
+<record id="view_real_estate_property_details_tree" model="ir.ui.view">
+    <field name="name">real_estate.property_details.tree</field>
+    <field name="model">real_estate.property_details</field>
+    <field name="arch" type="xml">
+        <tree string="Property Details Tree">
+            <field name="property_id" />
+            <field name="name" />
+            <field name="bedroom_area" />
+            <field name="bathroom_area" />
+            <field name="kitchen_area" />
+            <field name="hall_area" />
+            <field name="parking_area" />
+            <field name="backyard_area" />
+            <field name="total_bedrooms" />
+            <field name="total_bathrooms" />
+            <field name="total_floors" />
+            <field name="total_halls" />
+            <field name="total_parkings" />
+        </tree> 
+    </field>
+</record>
+
+<!--Custom Kanban-->
+<record id="view_real_estate_property_details_kanban" model="ir.ui.view">
+    <field name="name">real_estate.property_details.kanban</field>
+    <field name="model">real_estate.property_details</field>
+    <field name="arch" type="xml" >
+    <kanban string="Property Details Kanban">
+
+        <templates>
+            <t t-name="kanban-box">
+                <div class="oe_kanban_global_click">
+                    <div class="oe_kanban_details">
+
+                        <div class="oe_kanban_tags">
+                            <strong>Property Details: </strong>
+                            <field name="property_id" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Detail's Name</strong>
+                            <field name="name" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Bedroom area: </strong>
+                            <field name="bedroom_area" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Bathroom area: </strong>
+                            <field name="bathroom_area" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Kitchen area: </strong>
+                            <field name="kitchen_area" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Hall area: </strong>
+                            <field name="hall_area" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Parking area: </strong>
+                            <field name="parking_area" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Backyard area: </strong>
+                            <field name="backyard_area" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Total bedrooms: </strong>
+                            <field name="total_bedrooms" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Total bathrooms: </strong>
+                            <field name="total_bathrooms" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Total floors: </strong>
+                            <field name="total_floors" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Total halls: </strong>
+                            <field name="total_halls" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Total parking: </strong>
+                            <field name="total_parkings" />
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+        </templates>
+
+        
+    </kanban>
+    </field>
+</record>
+
+<!--Custom form-->
+<record id="view_real_estate_property_details_form" model="ir.ui.view">
+    <field name="name">real_estate.property_details.form</field>
+    <field name="model">real_estate.property_details</field>
+    <field name="arch" type="xml">
+        <form string="Property Details Form">
+            <sheet>
+                <group id="property_details_group1">
+                    <field name="property_id" />
+                    <field name="name" />
+                </group>
+                
+                <group id="property_details_group2" string="Property details amenity" optional="hidden">
+                    <field name="bedroom_area" />
+                    <field name="bathroom_area" />
+                    <field name="kitchen_area" />
+                    <field name="hall_area" />
+                    <field name="parking_area" />
+                    <field name="backyard_area" />
+                    
+                </group>
+
+                <group id="property_details_group3" string="Total of Properties group" optional="hide">
+                    <field name="total_bedrooms" />
+                    <field name="total_bathrooms" />
+                    <field name="total_floors" />
+                    <field name="total_halls" />
+                    <field name="total_parkings" />
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user" />
+                <field name="message_ids" />
+            </div>
+        </form>
+    </field>
+</record>
+
+
+<record id="action_real_estate_property_details_window" model="ir.actions.act_window">
+    <field name="name">Property Details</field>
+    <field name="res_model">real_estate.property_details</field>
+    <field name="view_mode">tree,kanban,form</field>
+    <field name="view_ids" eval="[
+        Command.clear(),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_estate_property_details_tree')}),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_real_estate_property_details_kanban')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_property_details_form')})
+    ]" />
+
+</record>
+</odoo>

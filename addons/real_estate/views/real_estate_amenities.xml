@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--Custom Tree-->
+<record id="view_real_estate_amenities_tree" model="ir.ui.view">
+    <field name="name">real_estate.amenities.tree</field>
+    <field name="model">real_estate.amenities</field>
+    <field name="arch" type="xml">
+        <tree string="Amenities Tree">
+            <field name="name" />
+            <field name="description" />
+        </tree>
+    </field>
+</record>
+
+<!--Custom kanban-->
+<record id="view_real_estate_amenities_kanban" model="ir.ui.view">
+    <field name="name">real_estate.amenities.kanban</field>
+    <field name="model">real_estate.amenities</field>
+    <field name="arch" type="xml">
+        <kanban string="Amenities Kanban">
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click">
+                        <div class="oe_kanban_details">
+
+                            <div class="oe_kanban_tags">
+                                <field name="name" />
+                            </div>
+
+                            <div class="oe_kanban_tags">
+                                <field name="description" />
+                            </div>
+                        
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+<!--Custom form-->
+<record id="view_real_estate_amenities_form" model="ir.ui.view">
+    <field name="name">real_estate.amenities.form</field>
+    <field name="model">real_estate.amenities</field>
+    <field name="arch" type="xml">
+        <form string="Amenities Form">
+            <sheet>
+                <group id="amenities1">
+                    <field name="name" />
+                    <field name="description" />
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user" />
+                <field name="message_ids" />
+            </div>
+        </form>
+    </field>
+
+</record>
+
+
+
+<record id="action_real_estate_amenities_window" model="ir.actions.act_window">
+    <field name="name">Property Amenities</field>
+    <field name="res_model">real_estate.amenities</field>
+    <field name="view_mode">tree,kanban,form</field>
+    <field name="view_ids" eval="[Command.clear(),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_estate_amenities_tree')}),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_real_estate_amenities_kanban')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_amenities_form')}),
+    ]" />
+</record>
+</odoo>

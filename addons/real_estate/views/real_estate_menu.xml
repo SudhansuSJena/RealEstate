@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- MAIN MENU: RealEstate -->
+    <menuitem
+        id="real_estate_menu"
+        name="RealEstate"
+        sequence="1"
+    />
+
+    <!-- RealEstate Submenu: RealEstate Property -->
+    <menuitem
+        id="real_estate_property_all_menu"
+        name="RealEstate Property"
+        parent="real_estate_menu"
+        sequence="1"
+    />
+
+    <!-- RealEstate Submenu: Customers & Properties -->
+    <menuitem
+        id="real_estate_customer_and_property_menu"
+        name="Customers &amp; Properties"
+        parent="real_estate_menu"
+        sequence="2"
+    />
+
+    <!-- RealEstate Submenu: RealEstate System -->
+    <menuitem
+        id="real_estate_system_all_menu"
+        name="RealEstate System"
+        parent="real_estate_menu"
+        sequence="3"
+    />
+
+    <!-- RealEstate Property Submenu: Property -->
+    <menuitem
+        id="real_estate_property_menu"
+        name="Property"
+        parent="real_estate_property_all_menu"
+        sequence="1"
+        action="action_real_estate_property_window"
+    />
+
+    <!-- RealEstate Property Submenu: Property Types -->
+    <menuitem
+        id="real_estate_property_types_menu"
+        name="Property Types"
+        parent="real_estate_property_all_menu"
+        sequence="2"
+        action="action_real_estate_property_types_window"
+    />
+
+    <!-- RealEstate Property Submenu: Amenities -->
+    <menuitem
+        id="real_estate_amenities_menu"
+        name="Amenities"
+        parent="real_estate_property_all_menu"
+        sequence="3"
+        action="action_real_estate_amenities_window"
+    />
+
+    <!-- RealEstate Property Submenu: Features -->
+    <menuitem
+        id="real_estate_features_menu"
+        name="Features"
+        parent="real_estate_property_all_menu"
+        sequence="4"
+        action="action_real_estate_features_window"
+    />
+
+    <!-- RealEstate Property Submenu: Connectivity -->
+    <menuitem
+        id="real_estate_connectivity_menu"
+        name="Connectivity"
+        parent="real_estate_property_all_menu"
+        sequence="5"
+        action="action_real_estate_connectivity_window"
+    />
+
+    <!-- RealEstate System Submenu: Booking System -->
+    <menuitem
+        id="real_estate_bookings_menu"
+        name="Booking System"
+        parent="real_estate_system_all_menu"
+        sequence="10"
+        action="action_real_estate_bookings_window"
+    />
+
+    <!-- RealEstate System Submenu: Sale Contract System -->
+    <menuitem
+        id="real_estate_sale_contracts_menu"
+        name="Sale Contract System"
+        parent="real_estate_system_all_menu"
+        sequence="20"
+        action="action_real_estate_sale_contracts_window"
+    />
+
+    <!-- RealEstate System Submenu: Rental Contract System -->
+    <menuitem
+        id="real_estate_rent_contracts_menu"
+        name="Rental Contract System"
+        parent="real_estate_system_all_menu"
+        sequence="30"
+        action="action_real_estate_rent_contracts_window"
+    />
+
+    <!-- Customer & Property Submenu: Property Details -->
+    <menuitem
+        id="real_estate_property_details_menu"
+        name="Property Details"
+        parent="real_estate_customer_and_property_menu"
+        sequence="1"
+        action="action_real_estate_property_details_window"
+    />
+
+    <!-- Customer & Property Submenu: Customers Details -->
+    <menuitem
+        id="real_estate_customers_details_menu" 
+        name="Property's Details"
+        parent="real_estate_customer_and_property_menu"
+        sequence="1"
+        action="action_real_estate_property_details_window"
+    />
+
+    <menuitem
+        id="model_name_menu"
+        name="Customer's Details"
+        parent="real_estate_customer_and_property_menu"
+        sequence="2"
+        action="action_real_estate_customers_window"
+    />
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="customers_page" name="Customer Page">
+        <t t-call="website.layout">
+            <div class="container">
+               
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>
+                                Customer's Name
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="customers" t-as="customer">
+                        <tr>
+                            <td>
+                                 
+                                 <t t-esc="customer.name" />
+                                
+                            </td>
+                        </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div> 
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Custom Tree -->
+    <record id="view_real_estate_features_tree" model="ir.ui.view">
+        <field name="name">real_estate.features.tree</field>
+        <field name="model">real_estate.features</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Custom Kanban -->
+    <record id="view_real_estate_features_kanban" model="ir.ui.view">
+        <field name="name">real_estate.features.kanban</field>
+        <field name="model">real_estate.features</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <div class="oe_kanban_tags">
+                                    <field name="name" />
+                                </div>
+                                <div class="oe_kanban_tags">
+                                    <field name="description" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Custom Form -->
+    <record id="view_real_estate_features_form" model="ir.ui.view">
+        <field name="name">real_estate.features.form</field>
+        <field name="model">real_estate.features</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="description" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user" />
+                <field name="message_ids" />
+            </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_real_estate_features_window" model="ir.actions.act_window">
+        <field name="name">Real Estate Features</field>
+        <field name="res_model">real_estate.features</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_ids" eval="[Command.clear(),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_estate_features_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_real_estate_features_kanban')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_features_form')}),
+        ]" />
+    </record>
+
+</odoo>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--Custom Tree View-->
+<record id="view_real_estate_sale_contracts_tree" model="ir.ui.view">
+    <field name="name">real_estate.sale_contracts.tree</field>
+    <field name="model">real_estate.sale_contracts</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="buyer_id" />
+            <field name="property_id" />
+            <field name="name" />
+            <field name="currency_id" />
+            <field name="sale_price" />
+            <field name="sale_date" />
+            <field name="sale_status" />
+        </tree>
+    </field>
+</record>
+
+<!--Custom Kanban View-->
+<record id="view_real_estate_sale_contracts_kanban" model="ir.ui.view">
+    <field name="name">real_estate.sale_contracts.kanban</field>
+    <field name="model">real_estate.sale_contracts</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <templates>
+            <t t-name="kanban-box">
+                <div class="oe_kanban_global_click">
+                    <div class="oe_kanban_details">
+
+                        <div class="oe_kanban_tags">
+                            <strong>Buyer: </strong>
+                            <field name="buyer_id" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Property: </strong>
+                            <field name="property_id" />
+                        </div>
+
+
+                        <div class="oe_kanban_tags">
+                            <strong>Sale's Name: </strong>
+                            <field name="name" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Currency: </strong>
+                            <field name="currency_id" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Sale's Price: </strong>
+                            <field name="sale_price" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Sale's Date: </strong>
+                            <field name="sale_date" />
+                        </div>
+
+                        <div class="oe_kanban_tags">
+                            <strong>Sale's status: </strong>
+                            <field name="sale_status" />
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+<!--Custom Form View-->
+<record id="view_real_estate_sale_contracts_form" model="ir.ui.view">
+    <field name="name">real_estate.sale_contracts.form</field>
+    <field name="model">real_estate.sale_contracts</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="buyer_id" />
+                    <field name="property_id" />
+                    <field name="currency_id" />
+                    <field name="sale_price" />
+                    <field name="sale_date" />
+                    <field name="sale_status" />
+                </group>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user" />
+                <field name="message_ids" />
+            </div>
+        </form>
+    </field>
+</record>
+
+<!--Custom window action-->
+<record id="action_real_estate_sale_contracts_window" model="ir.actions.act_window">
+    <field name="name">Sale Contracts</field>
+    <field name="res_model">real_estate.sale_contracts</field>
+    <field name="view_mode">tree,kanban,form</field>
+    <field name="view_ids" eval="[
+        Command.clear(),
+        (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_estate_sale_contracts_tree')}),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_real_estate_sale_contracts_kanban')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_sale_contracts_form')})
+    ]"
+    />
+</record>
+</odoo>
