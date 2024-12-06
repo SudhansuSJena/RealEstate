@@ -5,7 +5,7 @@
   "version": "17.0.1.1",
   "sequence": "1",
   "depends": [
-    "mail"  
+    "mail", "website" 
   ],
   "data": [
       "security/security.xml",

@@ -9,9 +9,12 @@
             <form string="Property Form">
                 <sheet>
                     <group string="Property Images">
-                        <field name="image1" widget="image" class="oe_avatar" />
-                        <field name="image2" widget="image" class="oe_avatar" />
+                        <field name="image" widget="image" class="oe_avatar" />
                     </group>
+                    <group string="Property Imagess">
+                        <field name="image1" widget="image" class="oe_avatar" />
+                    </group>
+                    
                     <group id="form_group1">
                         <field name="name" />
                         <field name="typeOfProperty" />
@@ -54,8 +57,8 @@
         <field name="model">real_estate.property</field>
         <field name="arch" type="xml">
             <tree string="Property Tree">
-                <field name="image1" />
-                <field name="image2" />
+                <field name="image" />
+                <field name="image1" widget="image" class="oe_avatar" />
                 <field name="name" />
                 <field name="typeOfProperty" />
                 <field name="status" />
@@ -88,6 +91,17 @@
                 <t t-name="kanban-box">
                     <div class="oe_kanban_global_click">
                         <div class="oe_kanban_details">
+
+                            <div class="oe_kanban_title">
+                                <strong>Property Image: </strong>
+                                <field name="image" />
+                            </div>
+
+                            <div class="oe_kanban_title">
+                                <strong>Property Image1: </strong>
+                                <field name="image1" widget="image" class="oe_avatar" />
+                            </div>
+
                             <div class="oe_kanban_title">
                                 <strong>Property Name: </strong>
                                 <field name="name" />

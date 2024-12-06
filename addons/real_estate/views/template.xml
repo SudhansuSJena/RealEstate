@@ -29,4 +29,70 @@
             </div> 
         </t>
     </template>
+
+    <!-- <a t-attf-href="/property/{{ slug(property) }}"><t t-esc="property.name" /></a> -->
+    <template id="product_page" name="Product Page">
+        <t t-call="website.layout">
+        <t t-set="title">Property</t>
+        <div class="oe_structure">
+            <div class="container">
+                <h1>Property List</h1>
+                <table class="table table-borderd">
+                <thead>
+                <tr>
+                    <th>Property Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Area</th>
+                    <th>Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                <t t-foreach="properties" t-as="property">
+                <tr>
+                    <td><a t-attf-href="/property/{{ slug(property) }}"><t t-esc="property.name" /></a></td>
+                    <td><t t-esc="property.typeOfProperty" /></td>
+                    <td><t t-esc="property.status" /></td>
+                    <td><t t-esc="property.area" /></td>
+                    <td>
+                        <t t-if="property.image1">
+                        <img t-att-src="image_data_uri(property.image1)" alt="Property Image" class="img-thumbnail" style="max-width: 100px; max-height: 100px; object-fit: cover;"/>
+                        </t>
+                    <t t-else="">No Image</t>
+                    </td>
+                </tr>
+                </t>
+                
+                </tbody>
+                </table>
+            </div>
+        </div>
+        </t>
+    </template>
+
+    <template id="property_detail_page" name="Property Detail template">
+        <t t-call="website.layout">
+        <t t-set="title"><t t-esc="property.name" /></t>
+        <div class="oe_structure">
+            <div class="container">
+                <h3><t t-esc="property.name" /></h3>
+                <ul>
+                    <li>Property type: <t t-esc="property.typeOfProperty.mapped(name)" /></li>
+                    <li>Property status: <t t-esc="property.status"/></li>
+                    <li>Property area: <t t-esc="property.area"/></li>
+                    <li>Geo-location: <t t-esc="property.geo_location"/></li>
+                    <li>Amenity: <t t-esc="property.amenity.mapped(name)" /></li>
+                    <li>Amenities: 
+                    <t t-foreach="property.amenity" t-as="amenity">
+                        <t t-esc="amenity.name"/><t t-if="not t_last">, </t>
+                    </t>
+                    </li>
+                    <li>Image: <t t-esc="property.image" /></li>
+
+                </ul>
+            </div>
+        </div>
+        
+        </t>
+    </template>
 </odoo>
