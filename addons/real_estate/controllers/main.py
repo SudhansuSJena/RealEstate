@@ -2,7 +2,12 @@ from odoo import http
 from odoo.http import request
 
 class RealEstate(http.Controller):
-    @http.route('/realestate/my', website=True, auth='public')
+
+    @http.route('/', auth="public", website=True)
+    def real_estate_website(self, **kwargs):
+        return request.render("real_estate.website_front_page")
+
+    @http.route('/customer', website=True, auth='public')
     def real_estate_customers(self, **kw):
         customers = request.env["real_estate.customers"].sudo().search([])
         return request.render("real_estate.customers_page", {

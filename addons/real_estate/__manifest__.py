@@ -22,6 +22,7 @@
       "views/real_estate_property_types_views.xml",
       "views/real_estate_property_views.xml",
       "views/real_estate_menu.xml",
+      "views/website_menus.xml",
   ],
   "application": True, # Add this to make it appear in apps list
   "installable": True # Add this to make it installable
