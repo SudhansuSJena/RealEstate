@@ -48,29 +48,33 @@
                     <h1 class="display-4 font-weight-bold">Property Listings</h1>
                     <p class="text-muted">Explore a wide range of properties with details and images.</p>
                 </div>
-                <!-- Table Section -->
-                <div class="table-responsive shadow-lg p-3 mb-5 bg-white rounded">
-                    <table class="table table-hover table-striped align-middle">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Property Name</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Area (sq ft)</th>
-                                <th scope="col">Image</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t t-foreach="properties" t-as="property">
-                                <tr>
-                                    <td>
-                                        <a t-attf-href="/property/{{ slug(property) }}" class="text-primary font-weight-bold">
+                <!-- Card Grid Section -->
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <t t-foreach="properties" t-as="property">
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <t t-if="property.image1">
+                                    <img t-att-src="image_data_uri(property.image1)" 
+                                         class="card-img-top" 
+                                         alt="Property Image" 
+                                         style="height: 200px; object-fit: cover;" />
+                                </t>
+                                <t t-else="">
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                         style="height: 200px;">
+                                        <span class="text-muted">No Image</span>
+                                    </div>
+                                </t>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a t-attf-href="/property/{{ slug(property) }}" class="text-primary text-decoration-none">
                                             <t t-esc="property.name" />
                                         </a>
-                                    </td>
-                                    <td><t t-esc="property.typeOfProperty" /></td>
-                                    <td>
-                                        <!-- Status Badges -->
+                                    </h5>
+                                    <p class="card-text mb-1"><strong>Type:</strong> <t t-esc="property.typeOfProperty" /></p>
+                                    <p class="card-text mb-1"><strong>Area:</strong> <t t-esc="property.area" /> sq ft</p>
+                                    <p class="card-text mb-1">
+                                        <strong>Status:</strong>
                                         <span t-att-class="'badge badge-' + (
                                             'success' if property.status == 'available' else 
                                             'warning' if property.status == 'booked' else 
@@ -78,25 +82,17 @@
                                             'info')">
                                             <t t-esc="dict(available='Available', booked='Booked', sold='Sold', leased='Leased')[property.status]" />
                                         </span>
-                                    </td>
-                                    <td><t t-esc="property.area" /></td>
-                                    <td>
-                                        <t t-if="property.image1">
-                                            <img t-att-src="image_data_uri(property.image1)" alt="Property Image"
-                                                 class="img-fluid img-thumbnail"
-                                                 style="max-width: 100px; max-height: 100px; object-fit: cover;" />
-                                        </t>
-                                        <t t-else="">No Image</t>
-                                    </td>
-                                </tr>
-                            </t>
-                        </tbody>
-                    </table>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
                 </div>
             </div>
         </div>
     </t>
 </template>
+
 
 
 <template id="property_detail_page" name="Property Detail Page">
@@ -216,6 +212,18 @@
                         </div>
                         <div class="card-body" style="max-height: 400px; overflow-y: auto;">
                             <div class="mb-3">
+                                <!-- Image -->
+                                <t t-if="property.image1">
+                                    <img t-att-src="image_data_uri(property.image1)" 
+                                         alt="Property Image" 
+                                         class="img-thumbnail mb-3"
+                                         style="max-width: 100%; max-height: 300px; object-fit: cover;" />
+                                </t>
+                                <t t-else="">
+                                    <span>No Image Available</span>
+                                </t>
+                            </div>
+                            <div class="mb-3">
                                 <h4 class="text-secondary">Property Name:</h4>
                                 <p class="h5"><t t-esc="property.name" /></p>
                             </div>
@@ -233,8 +241,12 @@
             </div>
 
             <div class="text-center mt-5">
+                <a href="/" class="btn btn-primary btn-lg">Continue</a>
+            </div>
+            <div class="text-center mt-5">
                 <a href="/" class="btn btn-primary btn-lg">Back to Home</a>
             </div>
+
         </div>
     </t>
 </template>
