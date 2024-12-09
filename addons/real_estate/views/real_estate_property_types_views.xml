@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+<data>
     <!-- Custom form view -->
     <record id="view_real_estate_property_types_form" model="ir.ui.view">
         <field name="name">real_estate.property_types.form</field>
@@ -65,4 +65,5 @@
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_property_types_form')})
         ]"/>
     </record>
+    </data>
 </odoo>

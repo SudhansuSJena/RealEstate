@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+<data>
+    <!--Custom tree-->
+    <record id="view_real_estate_connectivity_tree" model="ir.ui.view">
+        <field name="name">real_estate.connectivity.tree</field>
+        <field name="model">real_estate.connectivity</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
 
-<!--Custom tree-->
-<record id="view_real_estate_connectivity_tree" model="ir.ui.view">
-    <field name="name">real_estate.connectivity.tree</field>
-    <field name="model">real_estate.connectivity</field>
-    <field name="arch" type="xml">
-        <tree>
-            <field name="name" />
-            <field name="description" />
-        </tree>
-    </field>
-</record>
+    <!--Custom kanban-->
+    <record id="view_real_estate_connectivity_kanban" model="ir.ui.view">
+        <field name="name">real_estate.connectivity.kanban</field>
+        <field name="model">real_estate.connectivity</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <div class="oe_kanban_tags">
+                                    <strong>Connectivity Name: </strong>
+                                    <field name="name" />
+                                </div>
 
-<!--Custom kanban-->
-<record id="view_real_estate_connectivity_kanban" model="ir.ui.view">
-    <field name="name">real_estate.connectivity.kanban</field>
-    <field name="model">real_estate.connectivity</field>
-    <field name="arch" type="xml">
-        <kanban>
-            <templates>
-                <t t-name="kanban-box">
-                    <div class="oe_kanban_global_click">
-                        <div class="oe_kanban_details">
-                            <div class="oe_kanban_tags">
-                                <strong>Connectivity Name: </strong>
-                                <field name="name" />
-                            </div>
-
-                            <div class="oe_kanban_tags">
-                                <strong>Description: </strong>
-                                <field name="description" />
+                                <div class="oe_kanban_tags">
+                                    <strong>Description: </strong>
+                                    <field name="description" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </t>
-            </templates>
-        </kanban>
-    </field>
-</record>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
-<!--Custom form-->
-<record id="view_real_estate_connectivity_form" model="ir.ui.view">
-    <field name="name">real_estate.connectivity.form</field>
-    <field name="model">real_estate.connectivity</field>
-    <field name="arch" type="xml">
-        <form>
-            <sheet>
-                <group>
-                    <field name="name" />
-                    <field name="description" />
-                </group>
-            </sheet>
-            <div class="oe_chatter">
-                <field name="message_follower_ids" groups="base.group_user" />
-                <field name="message_ids" />
-            </div>
-        </form>
-    </field>
-</record>
+    <!--Custom form-->
+    <record id="view_real_estate_connectivity_form" model="ir.ui.view">
+        <field name="name">real_estate.connectivity.form</field>
+        <field name="model">real_estate.connectivity</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="description" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
 
     <!--Window Action-->
     <record id="action_real_estate_connectivity_window" model="ir.actions.act_window">
@@ -72,4 +72,6 @@
         ]" />
 
     </record>
+
+</data>
 </odoo>

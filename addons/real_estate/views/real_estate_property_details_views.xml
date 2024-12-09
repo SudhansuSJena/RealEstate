@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+<data>
 <!--Custom tree-->
 <record id="view_real_estate_property_details_tree" model="ir.ui.view">
     <field name="name">real_estate.property_details.tree</field>
@@ -162,4 +162,5 @@
     ]" />
 
 </record>
+</data>
 </odoo>

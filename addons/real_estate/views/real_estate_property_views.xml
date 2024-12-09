@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+<data>
     <record id="view_real_estate_property_form" model="ir.ui.view">
         <field 
         name="name">real_estate.property.form</field>
@@ -181,4 +181,5 @@
         (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_estate_property_tree')}), 
         (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_property_form')})]" />
     </record>
+    </data>
 </odoo>

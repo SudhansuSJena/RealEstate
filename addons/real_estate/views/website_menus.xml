@@ -13,7 +13,7 @@
         <record id="website_real_estate_property_menu" model="website.menu">
             <field name="name">Properties</field>
             <field name="url">/property</field>
-            <field name="parent_id" ref="website_real_estate_main_menu" />
+            <field name="parent_id" eval="4" />
             <field name="sequence" type="int">1</field>
             <field name="website_id" ref="website.default_website" />
         </record>
@@ -21,7 +21,7 @@
         <record id="website_real_estate_customer_menu" model="website.menu">
             <field name="name">Customers</field>
             <field name="url">/customer</field>
-            <field name="parent_id" ref="website_real_estate_main_menu" />
+            <field name="parent_id" eval="4" />
             <field name="sequence">2</field>
             <field name="website_id" ref="website.default_website" />
         </record>

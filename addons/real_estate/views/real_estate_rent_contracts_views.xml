@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+<data>
 <!--Custom Tree view-->
 <record id="view_real_estate_rent_contracts_tree" model="ir.ui.view">
     <field name="name">real_estate.rent_contracts.tree</field>
@@ -115,4 +115,5 @@
         (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_estate_rent_contracts_form')})
     ]" />
 </record>
+</data>
 </odoo>

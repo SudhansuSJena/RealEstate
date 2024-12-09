@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+<data>
 <!--Custom Tree View-->
 <record id="view_real_estate_sale_contracts_tree" model="ir.ui.view">
     <field name="name">real_estate.sale_contracts.tree</field>
@@ -110,4 +110,5 @@
     ]"
     />
 </record>
+</data>
 </odoo>

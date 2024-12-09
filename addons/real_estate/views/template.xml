@@ -26,10 +26,8 @@
                     <tbody>
                         <t t-foreach="customers" t-as="customer">
                         <tr>
-                            <td>
-                                 
-                                 <t t-esc="customer.name" />
-                                
+                            <td>   
+                                 <t t-esc="customer.name.name" />
                             </td>
                         </tr>
                         </t>
@@ -106,58 +104,71 @@
         <t t-set="title"><t t-esc="property.name" /></t>
         <div class="oe_structure">
             <div class="container mt-4">
-                <div class="card shadow-sm">
-                    <!-- Card Header -->
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0"><t t-esc="property.name" /></h3>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <strong>Property Type:</strong>
-                                <span><t t-esc="', '.join(property.typeOfProperty.mapped('name'))" /></span>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Property Status:</strong>
-                                <span><t t-esc="property.status" /></span>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <strong>Property Area:</strong>
-                                <span><t t-esc="property.area" /> sq.ft</span>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Geo-location:</strong>
-                                <span><t t-esc="property.geo_location" /></span>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-12">
-                                <strong>Amenities:</strong>
+                <div class="row">
+                    <!-- Left Side: Fixed Image and Button -->
+                    <div class="col-md-4 position-sticky" style="top: 20px;">
+                        <div class="card shadow-sm">
+                            <div class="card-body text-center">
+                                <!-- Image -->
+                                <t t-if="property.image1">
+                                    <img t-att-src="image_data_uri(property.image1)" 
+                                         alt="Property Image" 
+                                         class="img-thumbnail mb-3"
+                                         style="max-width: 100%; max-height: 300px; object-fit: cover;" />
+                                </t>
+                                <t t-else="">
+                                    <span>No Image Available</span>
+                                </t>
+                                <!-- Button -->
                                 <div>
-                                    <t t-foreach="property.amenity" t-as="amenity">
-                                        <span class="badge badge-primary mr-1" style="color: black;">
-                                            <t t-esc="amenity.name" />
-                                        </span>
-                                    </t>
+                                    <a t-attf-href="/buy_propertyy/{{ slug(property) }}" 
+                                       class="btn btn-success btn-block mt-3">
+                                        Buy
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <strong>Image:</strong>
-                                <div class="mt-2">
-                                    <t t-if="property.image1">
-                                        <img t-att-src="image_data_uri(property.image1)" 
-                                             alt="Property Image" 
-                                             class="img-thumbnail"
-                                             style="max-width: 300px; max-height: 300px; object-fit: cover;" />
-                                    </t>
-                                    <t t-else="">
-                                        <span>No Image Available</span>
-                                    </t>
+                    </div>
+                    <!-- Right Side: Scrollable Property Details -->
+                    <div class="col-md-8">
+                        <div class="card shadow-sm">
+                            <!-- Card Header -->
+                            <div class="card-header bg-primary text-white">
+                                <h3 class="mb-0"><t t-esc="property.name" /></h3>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Property Type:</strong>
+                                        <span><t t-esc="', '.join(property.typeOfProperty.mapped('name'))" /></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Property Status:</strong>
+                                        <span><t t-esc="property.status" /></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Property Area:</strong>
+                                        <span><t t-esc="property.area" /> sq.ft</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Geo-location:</strong>
+                                        <span><t t-esc="property.geo_location" /></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <strong>Amenities:</strong>
+                                        <div>
+                                            <t t-foreach="property.amenity" t-as="amenity">
+                                                <span class="badge badge-primary mr-1" style="color: black;">
+                                                    <t t-esc="amenity.name" />
+                                                </span>
+                                            </t>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -167,5 +178,67 @@
         </div>
     </t>
 </template>
+
+
+<template id="buy_property_page" name="Buy Property Page">
+    <t t-call="website.layout">
+        <div class="container my-5" style="min-height: 100vh; overflow-y: auto;">
+            <div class="text-center mb-4">
+                <h1 class="display-4 text-primary">Your Booking Details</h1>
+                <p class="lead text-muted">Thank you for your booking. Here are the details:</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <!-- Left Card for Customer Information -->
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-header bg-secondary text-white text-center">
+                            <h3>Customer Information</h3>
+                        </div>
+                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                            <div class="mb-3">
+                                <h4 class="text-secondary">Customer's Name:</h4>
+                                <p class="h5"><t t-esc="customer.name" /></p>
+                            </div>
+                            <div class="mb-3">
+                                <h4 class="text-secondary">Customer's ID:</h4>
+                                <p class="h5"><t t-esc="customer.id" /></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card for Property Information -->
+                <div class="col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h3>Property Information</h3>
+                        </div>
+                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                            <div class="mb-3">
+                                <h4 class="text-secondary">Property Name:</h4>
+                                <p class="h5"><t t-esc="property.name" /></p>
+                            </div>
+                            <div class="mb-3">
+                                <h4 class="text-secondary">Property ID:</h4>
+                                <p class="h5"><t t-esc="property.id" /></p>
+                            </div>
+                            <div class="mb-3">
+                                <h4 class="text-secondary">Price:</h4>
+                                <p class="h5 text-success"><t t-esc="booking.payment_price" /> Currency</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <a href="/" class="btn btn-primary btn-lg">Back to Home</a>
+            </div>
+        </div>
+    </t>
+</template>
+
+
 
 </odoo>
