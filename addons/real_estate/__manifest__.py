@@ -11,6 +11,7 @@
       "security/security.xml",
       "security/ir.model.access.csv",
       "views/assets.xml",
+      "views/forms.xml",
       "views/template.xml",
       "views/real_estate_sale_contracts_views.xml",
       "views/real_estate_bookings_views.xml",
@@ -28,6 +29,7 @@
   'assets': {
       'website.assets_frontend': [
           'real_estate/static/src/js/buy_property.js', # Add JS here
+          'real_estate/static/src/css/style.css',
       ],
   },
   "application": True, # Add this to make it appear in apps list

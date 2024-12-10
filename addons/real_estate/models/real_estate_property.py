@@ -25,7 +25,7 @@ class RealEstateProperty(models.Model):
         ('booked', 'Booked'),
         ('sold', 'Sold'),
         ('leased', 'Leased')
-    ], string="Property Status", tracking=True)
+    ], string="Property Status", default='available', tracking=True)
 
     area = fields.Float(string="Property Area", tracking=True)
     geo_location = fields.Char(string="Geo-Location", tracking=True)

@@ -6,6 +6,7 @@ class RealEstateCustomers(models.Model):
     _description="Customers to buy property"
     _inherit=['mail.thread'] # Inherit res.users to link with Odoo users
 
+    # takes user_id
     name = fields.Many2one(
         comodel_name="res.users",
         required=True,

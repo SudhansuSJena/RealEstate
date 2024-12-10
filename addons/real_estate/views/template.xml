@@ -18,17 +18,52 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <td>
-                                Customer's Name
-                            </td>
+                            <th>
+                                <b>Customer's Image</b>
+                            </th>
+                            <th>
+                                <b>Customer's Name</b>
+                            </th>
+                            <th>
+                                <b>Customer's email</b>
+                            </th>
+                            <th>
+                                <b>Customer's user type</b>
+                            </th>
+                            <th>
+                                <b>Customer's Sales Contract</b>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-foreach="customers" t-as="customer">
                         <tr>
+                            <td> 
+                                <t t-if="customer.image">
+                                    <img t-att-src="image_data_uri(customer.image)" />
+                                </t>
+                                <t t-else="">
+                                    No image
+                                </t>  
+                                 
+                            </td>
                             <td>   
                                  <t t-esc="customer.name.name" />
                             </td>
+                            <td>   
+                                 <t t-esc="customer.email" />
+                            </td>
+                            <td>   
+                                 <t t-esc="customer.user_type" />
+                            </td>
+                            <td>   
+                                <t t-esc="customer.sale_contract_ids" />
+                                <!-- <t t-foreach="customer.sale_contract_ids" t-as="sale_contract">
+                                    <t t-esc="sale_contract.property_id" />
+                                </t> -->
+
+                            </td>
+
                         </tr>
                         </t>
                     </tbody>
@@ -48,50 +83,55 @@
                     <h1 class="display-4 font-weight-bold">Property Listings</h1>
                     <p class="text-muted">Explore a wide range of properties with details and images.</p>
                 </div>
-                <!-- Card Grid Section -->
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <t t-foreach="properties" t-as="property">
-                        <div class="col">
-                            <div class="card h-100 shadow-sm">
-                                <t t-if="property.image1">
-                                    <img t-att-src="image_data_uri(property.image1)" 
-                                         class="card-img-top" 
-                                         alt="Property Image" 
-                                         style="height: 200px; object-fit: cover;" />
-                                </t>
-                                <t t-else="">
-                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
-                                         style="height: 200px;">
-                                        <span class="text-muted">No Image</span>
+                <!-- Scrollable Card Grid Section -->
+                <div class="scrollable-container" style="height: 500px; overflow-y: auto;">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <t t-foreach="properties" t-as="property">
+                            <div class="col">
+                                <div class="card h-100 shadow-sm">
+                                    <t t-if="property.image1">
+                                        <img t-att-src="image_data_uri(property.image1)" 
+                                             class="card-img-top" 
+                                             alt="Property Image" 
+                                             style="height: 200px; object-fit: cover;" />
+                                    </t>
+                                    <t t-else="">
+                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                             style="height: 200px;">
+                                            <span class="text-muted">No Image</span>
+                                        </div>
+                                    </t>
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a t-attf-href="/property/{{ slug(property) }}" class="text-primary text-decoration-none">
+                                                <t t-esc="property.name" />
+                                            </a>
+                                        </h5>
+                                        <p class="card-text mb-1"><strong>Type:</strong> <t t-esc="property.typeOfProperty" /></p>
+                                        <p class="card-text mb-1"><strong>Area:</strong> <t t-esc="property.area" /> sq ft</p>
+                                        <p class="card-text mb-1">
+                                            <strong>Status:</strong>
+                                            <t t-if="property.status == 'available'">
+                                                <span style="color: green; font-weight: bold;"><t t-esc="property.status" /></span>
+                                            </t>
+                                            <t t-elif="property.status == 'booked'">
+                                                <span style="color: blue; font-weight: bold;"><t t-esc="property.status" /></span>
+                                            </t>
+                                            <t t-else="">
+                                                <span style="color: red; font-weight: bold"><t t-esc="property.status" /></span>
+                                            </t>
+                                        </p>
                                     </div>
-                                </t>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <a t-attf-href="/property/{{ slug(property) }}" class="text-primary text-decoration-none">
-                                            <t t-esc="property.name" />
-                                        </a>
-                                    </h5>
-                                    <p class="card-text mb-1"><strong>Type:</strong> <t t-esc="property.typeOfProperty" /></p>
-                                    <p class="card-text mb-1"><strong>Area:</strong> <t t-esc="property.area" /> sq ft</p>
-                                    <p class="card-text mb-1">
-                                        <strong>Status:</strong>
-                                        <span t-att-class="'badge badge-' + (
-                                            'success' if property.status == 'available' else 
-                                            'warning' if property.status == 'booked' else 
-                                            'danger' if property.status == 'sold' else 
-                                            'info')">
-                                            <t t-esc="dict(available='Available', booked='Booked', sold='Sold', leased='Leased')[property.status]" />
-                                        </span>
-                                    </p>
                                 </div>
                             </div>
-                        </div>
-                    </t>
+                        </t>
+                    </div>
                 </div>
             </div>
         </div>
     </t>
 </template>
+
 
 
 
@@ -117,10 +157,24 @@
                                 </t>
                                 <!-- Button -->
                                 <div>
-                                    <a t-attf-href="/buy_propertyy/{{ slug(property) }}" 
-                                       class="btn btn-success btn-block mt-3">
+                                <t t-if="property.status == 'available'">
+                                <a t-attf-href="/buy_propertyy/{{ slug(property) }}" 
+                                       class="btn btn-success btn-block mt-3 text-decoration-none">
                                         Buy
                                     </a>
+                                </t>
+                                <t t-if="property.status == 'booked'">
+                                <a t-attf-href="/buy_propertyy/{{ slug(property) }}" 
+                                       class="btn btn-success btn-block mt-3 text-decoration-none">
+                                        Booked
+                                    </a>
+                                    <span class="text-muted">
+                                    Property is booked now but not sold.
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <span class="text-muted">This property has been sold.</span>
+                                </t>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +195,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <strong>Property Status:</strong>
-                                        <span><t t-esc="property.status" /></span>
+                                        <span><t t-esc="property.status" class="text-black" /></span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -241,16 +295,62 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="/" class="btn btn-primary btn-lg">Continue</a>
+                <a t-attf-href="/paymentsuccess/{{ slug(property) }}" class="btn btn-primary btn-lg text-decoration-none">Continue</a>
             </div>
             <div class="text-center mt-5">
-                <a href="/" class="btn btn-primary btn-lg">Back to Home</a>
+                <a t-attf-href="/" class="btn btn-primary btn-lg text-decoration-none">Back to Home</a>
             </div>
 
         </div>
     </t>
 </template>
 
+<template id="property_payment_successful" name="Property Payment Successful Page">
+    <t t-call="website.layout">
+        <div class="oe_structure text-center py-5">
+            <div class="container">
+                <!-- Hover Card using Bootstrap with inline styles -->
+                <div class="card shadow-lg border-0 rounded-3"
+                     style="transition: transform 0.3s ease-in-out; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);"
+                     onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0px 8px 20px rgba(0, 0, 0, 0.2)'"
+                     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0px 4px 10px rgba(0, 0, 0, 0.1)'">
+                    <div class="card-body">
+                        <!-- Title -->
+                        <h1 class="payment-success-title" style="font-size: 3rem; font-weight: bold; color: #28a745; margin-bottom: 30px;">
+                            Congratulations! You've Successfully Bought the Property
+                        </h1>
 
+                        <!-- Property Name -->
+                        <div class="property-name" style="font-size: 1.75rem; font-weight: 600; color: #333; margin-bottom: 15px;">
+                            Property Name: <t t-esc="property.name" />
+                        </div>
 
+                        <!-- Property Image -->
+                        <div class="property-image" style="margin: 30px 0;">
+                            <t t-if="property.image1">
+                                <img t-att-src="image_data_uri(property.image1)" alt="Property Image" class="img-fluid rounded shadow-lg" style="max-width: 100%; height: auto; max-height: 450px; object-fit: cover;" />
+                            </t>
+                            <t t-else="">
+                                <p style="font-size: 1.2rem; color: #6c757d;">No Image Available</p>
+                            </t>
+                        </div>
+
+                        <!-- Property Status -->
+                        <div class="property-status" style="font-size: 1.5rem; font-weight: 500; color: #6c757d; margin-top: 30px;">
+                            <strong>Status:</strong> <t t-esc="booking.booking_status" />
+                        </div>
+
+                        <!-- Call to Action (Home Button) -->
+                        <div class="text-center mt-5">
+                            <a t-attf-href="/" class="btn btn-primary px-4 py-2" 
+                               style="font-size: 1.3rem; background-color: #007BFF; color: white; border-radius: 8px; text-decoration: none; transition: background-color 0.3s ease;">
+                                Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
 </odoo>

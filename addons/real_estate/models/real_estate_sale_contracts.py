@@ -7,7 +7,14 @@ class RealEstateSaleContracts(models.Model):
     _inherit = ['mail.thread']
     _res_name = ['buyer_id']
 
-    name = fields.Char(string="Sale's Name")
+    name = fields.Many2one(
+        comodel_name="real_estate.customers",
+        string="Customer",
+        ondelete="cascade",
+        domain=[],
+        help='customers',
+        tracking=True
+    )
     property_id = fields.Many2one(
         comodel_name = "real_estate.property",
         string="Property",
@@ -37,7 +44,6 @@ class RealEstateSaleContracts(models.Model):
     buyer_id = fields.Many2one(
         comodel_name="real_estate.customers",
         string="Buyer",
-        required=True,
         ondelete="cascade",
         domain=[],
         help='Customer buying Property',

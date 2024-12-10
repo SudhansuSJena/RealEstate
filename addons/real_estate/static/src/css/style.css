@@ -1,0 +1,8 @@
+.scrollable-container {
+    height: 500px; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: auto; /* Prevent horizontal scrolling */
+    padding: 10px; /* Optional padding for better visuals */
+    border: 1px solid #ccc; /* Optional border for clarity */
+    background-color: #f9f9f9; /* Optional background for contrast */
+}
