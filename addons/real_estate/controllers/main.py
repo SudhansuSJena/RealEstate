@@ -9,8 +9,12 @@ class RealEstate(http.Controller):
     def real_estate_website(self, **kwargs):
         return request.render("real_estate.website_front_page", {})
 
+    # SuperAdmin access
     @http.route('/customer', website=True, auth='public')
     def real_estate_customers(self, **kw):
+        if not request.env.user.has_group('real_estate.group_real_estate_superadmin'):
+            return request.redirect('/web/login')
+
         customers = request.env["real_estate.customers"].sudo().search([])
         return request.render("real_estate.customers_page", {
             "customers": customers  # Corrected the key name
@@ -27,7 +31,7 @@ class RealEstate(http.Controller):
     def real_estate_property_detail(self, property, **kwargs):
         if not property.exists():
             return request.render('website.404')  # Render 404 page if property doesn't exist
-        
+
         print("Hello, this is my property.id")
         print(property.id)
         return request.render('real_estate.property_detail_page', {
@@ -35,16 +39,20 @@ class RealEstate(http.Controller):
         })
     
 
-    @http.route("/buy_propertyy/<model('real_estate.property'):property>", auth="public", website=True)
+    @http.route("/buy_propertyy/<model('real_estate.property'):property>", auth='public', website=True)
     def real_estate_buy_property(self, property, **kwargs):
+
+        # Get the current logged-in user
+        current_user = request.env.user
+        if current_user._is_public():
+            return request.redirect('/web/login')
+        
+
         if not property.exists():
             return request.render('website.404')
         
         # Mark the property as sold
         property.status = "booked"
-
-        # Get the current logged-in user
-        current_user = request.env.user
 
         # Check if the current user is already linked to a customer
         customer = request.env['real_estate.customers'].search([
@@ -77,7 +85,7 @@ class RealEstate(http.Controller):
             'customer': current_user,
         })
 
-    @http.route("/paymentsuccess/<model('real_estate.property'):property>", auth="public", website=True)
+    @http.route("/paymentsuccess/<model('real_estate.property'):property>", auth='public', website=True)
     def real_estate_payment_success(self, property, **kwargs):
         if not property.exists():
             return request.render('website.404')
@@ -124,52 +132,88 @@ class RealEstate(http.Controller):
             'property':property
         })
     
-    @http.route('/real_estate/add_property', type='http', auth='user', website=True)
+    @http.route('/real_estate/add_property', type='http', auth='public', website=True)
     def add_property_form(self):
         # Get property types for the dropdown
         property_types = request.env['real_estate.property_types'].sudo().search([])
 
+        amenity_types = request.env['real_estate.property'].sudo().search([])
+
+        connectivity_types = request.env['real_estate.connectivity'].sudo().search([])
+
         return request.render('real_estate.property_form_template', {
-            'property_types': property_types
+            'property_types': property_types,
+            'amenity_types': amenity_types,
+            'connectivity_types': connectivity_types
         })
     
 
     @http.route('/real_estate/save_property', type='http', auth='public', website=True)
-    def save_property(self, name, typeOfProperty, status, price, description=None, address=None, image=None):
+    def save_property(self, **kwargs):
+        """
+        Handles form submission from the frontend to save a property record in the backend.
+        """
+
         try:
+            # Extract form data: # Use `getlist` for multiple values
+            name = kwargs.get('name')
+            typeOfProperty = kwargs.get('typeOfProperty')
+            status = kwargs.get('status')
+            area = kwargs.get('area')
+            geo_location = kwargs.get('geo_location')
+            price = kwargs.get('price')
+
+            if(kwargs.get('image1')):
+                # 1. Retrieve uploaded image
+                uploaded_file = kwargs.get('image1')
+                # uploaded_file is now a FileStorage object.
+
+                # 2. Read the file's binary content
+                file_binary = uploaded_file.read()  
+                # file_binary contains the raw bytes of the image
+
+                # 3. Encode to base64
+                base64_image = base64.b64encode(file_binary)  
+                # base64_image is a base64 encoded string representation of the image
+
+            # Handle amenity (multiple selection)
+            if(kwargs.get('amenity')):
+                amenity_ids = [int(aid) for aid in (kwargs.get('amenity') if isinstance(kwargs.get('amenity'), list) else kwargs.get('amenity').split(','))]
+
+            # Handle connectivity (multiple selection)
+            if(kwargs.get('connectivity')):
+                connectivity_ids = [int(cid) for cid in (kwargs.get('connectivity') if isinstance(kwargs.get('connectivity'), list) else kwargs.get('connectivity').split(','))]
+
+            # Prepare property dictionary for record creation.
             property_vals = {
                 'name': name,
                 'typeOfProperty': typeOfProperty,
                 'status': status,
-                'price': float(price),
-                'description': description or False,
-                'address': address or False,
+                'area': area,
+                'geo_location': geo_location,
+                'price': float(price) if price else 0.0,
+                'image1': base64_image,
+                'connectivity': connectivity_ids,
+                'amenity': amenity_ids
             }
 
-            # Handle image upload
-            if(image):
-                property_vals = base64.b64encode(image.read())
+            # Create Property record.
+            request.env['real_estate.property'].sudo().create(property_vals)
 
-            # Create property record.
-            property_obj = request.env['real_estate.property'].sudo()
-            new_property = property_obj.create(property_vals)
-
+            # REDIRECT WITH SUCCESS message
             return request.redirect('/real_estate/add_property?success=1')
         
         except Exception as e:
-            # Log the error and redirect with an error message
-            request.env['ir.logging'].sudo().create({
-                'name': 'Property Creation Error',
-                'type': 'server',
-                'dbname': request.env.cr.dbname,
-                'level': 'error',
-                'message': str(e),
-                'path': '/real_estate/save_property',
-                'func': 'save_property',
-                'line': '0'
-            })
+            # Handle exceptions and rollback if needed
+            request.env.cr.rollback()
+
+            # Redirect to error message
             return request.redirect('/real_estate/add_property?error=1')
 
+
+        
+
+        
 
         
     

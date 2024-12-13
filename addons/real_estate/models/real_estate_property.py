@@ -28,6 +28,7 @@ class RealEstateProperty(models.Model):
     ], string="Property Status", default='available', tracking=True)
 
     area = fields.Float(string="Property Area", tracking=True)
+    
     geo_location = fields.Char(string="Geo-Location", tracking=True)
 
     amenity = fields.Many2many(

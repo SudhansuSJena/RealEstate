@@ -32,5 +32,6 @@
             <field name="implied_ids" eval="[(4, ref('real_estate.group_real_estate_admin'))]" />
             <field name="comment">Customers can buy properties, rent a property and see their properties.</field>
         </record>
+
     </data>
 </odoo>

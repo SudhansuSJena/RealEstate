@@ -10,20 +10,40 @@
             <field name="website_id" ref="website.default_website" />
         </record>
 
+        <!-- Properties Menu (Visible to all Users, including Public) -->
         <record id="website_real_estate_property_menu" model="website.menu">
             <field name="name">Properties</field>
             <field name="url">/property</field>
             <field name="parent_id" eval="4" />
             <field name="sequence" type="int">1</field>
             <field name="website_id" ref="website.default_website" />
+            <!-- <field name="groups_id" eval="[(6, 0, [])]" /> -->
         </record>
 
+        <!-- Property + menu (Restricted to Admin and SuperAdmin) -->
+        <record id="website_real_estate_property_form" model="website.menu">
+            <field name="name">Property + </field>
+            <field name="url">/real_estate/add_property</field>
+            <field name="parent_id" eval="4"/>
+            <field name="sequence" type="int">5</field>
+            <field name="website_id" ref="website.default_website" />
+            <!-- <field name="groups_id" eval="[(6, 0, [
+                ref('real_estate.group_real_estate_admin'), 
+                ref('real_estate.group_real_estate_superadmin')
+            ])]" /> -->
+        </record>
+
+        <!-- CUstomer menu(Restricted to admin and SuperADMIN) -->
         <record id="website_real_estate_customer_menu" model="website.menu">
             <field name="name">Customers</field>
             <field name="url">/customer</field>
             <field name="parent_id" eval="4" />
-            <field name="sequence">2</field>
+            <field name="sequence" type="int">2</field>
             <field name="website_id" ref="website.default_website" />
+            <!-- <field name="groups_id" eval="[(6, 0, [
+                ref('real_estate.group_real_estate_admin'), 
+                ref('real_estate.group_real_estate_superadmin')
+            ])]" /> -->
         </record>
     </data>
 </odoo> 
