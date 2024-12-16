@@ -10,7 +10,7 @@ class RealEstate(http.Controller):
         return request.render("real_estate.website_front_page", {})
 
     # SuperAdmin access
-    @http.route('/customer', website=True, auth='public')
+    @http.route('/customer', website=True, auth='user')
     def real_estate_customers(self, **kw):
         if not request.env.user.has_group('real_estate.group_real_estate_superadmin'):
             return request.redirect('/web/login')
@@ -132,7 +132,7 @@ class RealEstate(http.Controller):
             'property':property
         })
     
-    @http.route('/real_estate/add_property', type='http', auth='public', website=True)
+    @http.route('/real_estate/add_property', type='http', auth='user', website=True)
     def add_property_form(self):
         # Get property types for the dropdown
         property_types = request.env['real_estate.property_types'].sudo().search([])

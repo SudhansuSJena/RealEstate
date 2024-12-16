@@ -1,18 +1,55 @@
-odoo.define('real_estate.menu_visibility', function (require) {
-    "use strict";
+/** @odoo-module **/
 
-    var ajax = require('web.ajax');
-    var $ = require('jquery');
+import { Component, onWillStart } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
+import { registry } from "@web/core/registry";
 
-    $(document).ready(function() {
-        ajax.jsonRpc('/real_estate/menu_visibility', 'call', {}).then(function(result) {
-            // Property Plus Menu
-            var propertyPlusMenu = $('a[href="/real_estate/add_property"]');
-            propertyPlusMenu.toggle(result.property_plus_menu);
+export class MenuVisibilityComponent extends Component {
+    static template = 'real_estate.MenuVisibilityComponent';  // Ensure the template name is correct
 
-            // Customer Menu
-            var customerMenu = $('a[href="/customer"]');
-            customerMenu.toggle(result.customer_menu);
+    setup() {
+        this.rpc = useService("rpc");
+        this.state = {
+            propertyPlusMenuVisible: false,
+            customerMenuVisible: false,
+        };
+
+        onWillStart(async () => {
+            try {
+                // Fetch the visibility state for the menus
+                const result = await this.rpc("/real_estate/menu_visibility", {});
+                
+                // Map the response to the component's state
+                this.state.propertyPlusMenuVisible = result.property_plus_menu;
+                this.state.customerMenuVisible = result.customer_menu;
+
+                // Call the function to hide/show menus based on the state
+                this.toggleMenuVisibility();
+            } catch (error) {
+                console.error(`Error occurred while fetching menu visibility: ${error}`);
+            }
         });
-    });
+    }
+
+    // Function to toggle menu visibility based on the state
+    toggleMenuVisibility() {
+        // Select the menu items using their ids (replace with actual menu ids if needed)
+        const propertyPlusMenu = document.querySelector('a.nav-link[href="/real_estate/add_property"]');
+        const customerMenu = document.querySelector('a.nav-link[href="/customer"]');
+
+        // Show or hide the menus based on the state values
+        if (propertyPlusMenu) {
+            propertyPlusMenu.style.display = this.state.propertyPlusMenuVisible ? '' : 'none';
+        }
+
+        if (customerMenu) {
+            customerMenu.style.display = this.state.customerMenuVisible ? '' : 'none';
+        }
+    }
+}
+
+// Register the component in the 'systray' category
+registry.category("systray").add("menuVisibility", {
+    Component: MenuVisibilityComponent,
+    sequence: 10,
 });

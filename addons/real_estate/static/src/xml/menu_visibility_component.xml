@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="real_estate.MenuVisibilityComponent" owl="1">
+        <div>
+            <t t-if="state.propertyPlusMenuVisible">
+                <a href="/real_estate/add_property" class="nav-link">Property +</a>
+            </t>
+            <t t-if="state.customerMenuVisible">
+                <a href="/customer" class="nav-link">Customers</a>
+            </t>
+        </div>
+    </t>
+</templates>
